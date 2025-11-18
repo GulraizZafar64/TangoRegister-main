@@ -7,13 +7,29 @@
       "config": { "distDir": "dist/public" }
     },
     {
-      "src": "dist/vercel-handler.cjs",
+      "src": "server/vercel-handler.ts",
       "use": "@vercel/node"
     }
   ],
+  "functions": {
+    "server/vercel-handler.ts": {
+      "runtime": "nodejs20.x",
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
   "routes": [
-    { "src": "/api/(.*)", "dest": "/dist/vercel-handler.cjs" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/vercel-handler.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/public/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/public/index.html"
+    }
   ]
 }

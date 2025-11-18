@@ -7,6 +7,7 @@ import { ArrowLeft, Users, Calendar, Clock, CheckCircle } from "lucide-react";
 import { Workshop } from "@shared/schema";
 import { Link } from "wouter";
 import { useCurrentEvent } from "@/hooks/useCurrentEvent";
+import { Logo } from "@/components/logo";
 
 export default function Workshops() {
   const [selectedLevel, setSelectedLevel] = useState<string>("all");
@@ -70,6 +71,7 @@ export default function Workshops() {
                   Back to Registration
                 </Button>
               </Link>
+              <Logo height={40} showText={false} />
               <div>
                 <h1 className="text-xl font-bold text-gray-900">Workshop Selection</h1>
                 <p className="text-sm text-gray-500">

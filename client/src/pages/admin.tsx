@@ -20,6 +20,7 @@ import { Workshop, Milonga, Seat, Addon } from "@shared/schema";
 import { ObjectUploader } from "@/components/ObjectUploader";
 import { AdminTableManagement } from "@/components/admin-table-management";
 import { AdminEventsManagement } from "@/components/admin-events-management";
+import { Logo } from "@/components/logo";
 import {
   Sidebar,
   SidebarContent,
@@ -418,7 +419,7 @@ export default function AdminDashboard() {
         <Sidebar>
           <SidebarHeader>
             <div className="flex items-center justify-between px-2">
-              <h2 className="text-lg font-semibold">Admin Panel</h2>
+              <Logo height={32} showText={false} />
               <SidebarTrigger />
             </div>
           </SidebarHeader>
@@ -507,7 +508,8 @@ export default function AdminDashboard() {
           <header className="bg-white shadow-sm border-b sticky top-0 z-10">
             <div className="flex items-center gap-4 px-4 py-3">
               <SidebarTrigger className="md:hidden" />
-              <h1 className="text-lg sm:text-2xl font-bold text-gray-900">Dubai Tango Festival - Admin</h1>
+              <Logo height={36} showText={false} />
+              <h1 className="text-lg sm:text-2xl font-bold text-gray-900">Admin Panel 2</h1>
             </div>
           </header>
           <main className="p-4 sm:p-6 lg:p-8">

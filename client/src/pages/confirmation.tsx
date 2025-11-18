@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Users, CreditCard, Download, CheckCircle2, AlertTriangle } from "lucide-react";
 import { Workshop, Milonga, Seat, Addon } from "@shared/schema";
+import { Logo } from "@/components/logo";
 
 export default function ConfirmationPage() {
   const [location] = useLocation();
@@ -131,6 +132,10 @@ export default function ConfirmationPage() {
         )}
 
         <div className="text-center mb-8">
+          {/* Logo */}
+          <div className="mb-6">
+            <Logo height={60} showText={true} />
+          </div>
           {/* Package Type Header */}
           <div className="mb-4">
             <div className={`inline-flex items-center px-6 py-3 rounded-full font-bold text-lg ${

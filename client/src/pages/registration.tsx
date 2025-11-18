@@ -7,9 +7,9 @@ import { MilongaSelectionStep } from "@/components/milonga-selection-step";
 import { GalaDinnerStep } from "@/components/gala-dinner-step";
 import { AddonsStep } from "@/components/addons-step";
 import { CheckoutStep } from "@/components/checkout-step";
-import { Music } from "lucide-react";
 import { useCurrentEvent } from "@/hooks/useCurrentEvent";
 import { PackagePricingDisplay } from "@/components/package-pricing-display";
+import { Logo } from "@/components/logo";
 
 export interface PersonalInfo {
   firstName: string;
@@ -412,9 +412,7 @@ export default function Registration() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 sm:h-16 gap-3 sm:gap-0">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Music className="text-white h-4 w-4 sm:h-5 sm:w-5" />
-              </div>
+              <Logo height={40} showText={false} />
               <div>
                 <h1 className="text-lg sm:text-xl font-bold text-gray-900">{currentEvent?.name}</h1>
                 <p className="text-xs sm:text-sm text-gray-500">
@@ -446,13 +444,10 @@ export default function Registration() {
       <footer className="bg-gray-900 text-white mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <div className="flex justify-center items-center space-x-3 mb-4">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Music className="text-white h-4 w-4" />
-              </div>
-              <span className="text-xl font-bold">{currentEvent?.name || "Dubai Tango Festival"}</span>
+            <div className="flex justify-center items-center mb-4">
+              <Logo height={50} showText={true} className="text-white" />
             </div>
-            <p className="text-gray-400 text-sm">For support, contact us at support@dubaitangofestival.com</p>
+            <p className="text-gray-400 text-sm">For support, contact us at info@tangodubai.org</p>
           </div>
         </div>
       </footer>

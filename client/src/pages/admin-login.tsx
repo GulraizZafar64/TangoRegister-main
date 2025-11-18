@@ -8,6 +8,7 @@ import { Shield, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
 import { apiRequest } from "@/lib/queryClient";
+import { Logo } from "@/components/logo";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -109,15 +110,13 @@ export default function AdminLogin() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="p-3 bg-blue-100 rounded-full">
-              <Shield className="h-8 w-8 text-blue-600" />
-            </div>
+            <Logo height={60} showText={true} />
           </div>
-          <CardTitle className="text-2xl font-bold text-gray-900">
+          <CardTitle className="text-2xl font-bold text-gray-900 mt-4">
             Admin Access
           </CardTitle>
           <CardDescription>
-            Dubai Tango Festival Admin Dashboard
+            Admin Dashboard
           </CardDescription>
         </CardHeader>
         <CardContent>
