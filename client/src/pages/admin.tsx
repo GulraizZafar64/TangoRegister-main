@@ -509,7 +509,7 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-4 px-4 py-3">
               <SidebarTrigger className="md:hidden" />
               <Logo height={36} showText={false} />
-              <h1 className="text-lg sm:text-2xl font-bold text-gray-900">Admin Panel 2</h1>
+              <h1 className="text-lg sm:text-2xl font-bold text-gray-900">Admin Panel 2 3 4</h1>
             </div>
           </header>
           <main className="p-4 sm:p-6 lg:p-8">
