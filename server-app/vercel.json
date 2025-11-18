@@ -3,15 +3,9 @@
   "builds": [
     { "src": "dist/vercel-handler.cjs", "use": "@vercel/node" }
   ],
-  "functions": {
-    "dist/vercel-handler.cjs": {
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  },
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/api/(.*)",
       "dest": "dist/vercel-handler.cjs"
     }
   ]
