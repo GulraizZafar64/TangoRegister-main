@@ -8,6 +8,7 @@ export async function createApp(): Promise<Express> {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
 
+  
   app.use((req, res, next) => {
     const start = Date.now();
     const path = req.path;
