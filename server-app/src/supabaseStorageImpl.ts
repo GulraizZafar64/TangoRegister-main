@@ -23,7 +23,7 @@ import {
   events as eventsTable,
   pricingTiers as pricingTiersTable,
   packageConfigurations as packageConfigurationsTable
-} from '../shared/schema';
+} from '../../shared/schema';
 import { db } from "./db";
 import { eq, and, gte, lte, desc, sql } from "drizzle-orm";
 import type { IStorage } from "./storage";
