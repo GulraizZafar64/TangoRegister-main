@@ -279,6 +279,13 @@ async function calculateRegistrationTotal(data: InsertRegistration) {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Admin authentication endpoint - now using Supabase Auth
+    app.get("/api/health", (_req, res) => {
+    res.json({
+      status: "ok",
+      uptime: process.uptime(),
+      timestamp: new Date().toISOString(),
+    });
+  });
   app.post("/api/admin/login", async (req, res) => {
     try {
       const { email, password } = req.body;
