@@ -11,13 +11,6 @@
       "use": "@vercel/node"
     }
   ],
-  "functions": {
-    "server/vercel-handler.ts": {
-      "runtime": "nodejs20.x",
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  },
   "routes": [
     {
       "src": "/api/(.*)",
