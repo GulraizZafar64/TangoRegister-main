@@ -8,15 +8,37 @@ This guide will help you deploy the TangoRegister application to Vercel and trou
 2. A Supabase project with database and authentication configured
 3. All environment variables ready (see below)
 
+## Architecture Overview
+
+The repository now contains **two deployable applications**:
+
+- `client/` – the Vite/React frontend that builds to static assets served by a CDN.
+- `server-app/` – the standalone Express API that talks to Supabase and Stripe.
+
+Deploy each one as its own Vercel project (or host the server elsewhere) so they can scale independently. The frontend talks to the server via `VITE_API_URL`.
+
 ## Step 1: Prepare Your Repository
 
 Ensure your code is pushed to a Git repository (GitHub, GitLab, or Bitbucket). Vercel will connect to this repository for deployments.
 
 ## Step 2: Set Up Environment Variables in Vercel
 
-Go to your Vercel project dashboard → Settings → Environment Variables and add the following:
+Create **two** environment variable sets—one for the frontend project and one for the server API.
 
-### Required Environment Variables
+### Frontend (`client/`) Variables
+
+Add these under Project Settings → Environment Variables:
+```
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+VITE_API_URL=https://your-api-project.vercel.app   # URL of the server deployment
+```
+
+`VITE_API_URL` can be omitted for local dev (the app will fall back to same-origin `/api` routes), but it **must** be set in production once the server is deployed separately.
+
+### Server (`server-app/`) Variables
+
+Set the secure variables for the API project:
 
 #### Supabase Configuration
 ```
@@ -29,14 +51,6 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@db.your-project.supabase.co:5432/postgres
 ```
-
-#### Client-Side Supabase (Build-time variables)
-```
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-```
-
-**Important**: `VITE_*` variables are used during the build process. Vercel will automatically make them available if you set them as environment variables.
 
 #### Stripe Configuration
 ```
@@ -75,27 +89,39 @@ NODE_ENV=production
 
 ## Step 3: Deploy to Vercel
 
-### Option A: Deploy via Vercel Dashboard
+Create **two** Vercel projects (or monorepo targets) pointing to each workspace.
 
-1. Go to https://vercel.com/new
-2. Import your Git repository
-3. Vercel will auto-detect the configuration from `vercel.json`
-4. Add all environment variables (see Step 2)
-5. Click "Deploy"
+### Project A – Client (Static Site)
+1. Go to https://vercel.com/new and import the repo.
+2. When prompted for **Root Directory**, choose `client/`.
+3. Build command: `npm run build`
+4. Output directory: `dist/public`
+5. Add the frontend environment variables from Step 2.
+6. Deploy.
 
-### Option B: Deploy via Vercel CLI
+The root-level `vercel.json` mirrors this configuration, so deploying from the repo root also works if you prefer not to set a custom root directory.
+
+### Project B – Server API
+1. Create another Vercel project pointing to the `server-app/` directory.
+2. Build command: `npm run build`
+3. Output is handled by `server-app/vercel.json`, which wires `/dist/vercel-handler.cjs` as the entry point.
+4. Add the server environment variables from Step 2 (Supabase, Stripe, etc).
+5. Deploy.
+
+Once both deployments are live, update the frontend project's `VITE_API_URL` to the URL of the server project and trigger a redeploy.
+
+### Optional: Deploy via Vercel CLI
 
 ```bash
-# Install Vercel CLI
 npm i -g vercel
-
-# Login to Vercel
 vercel login
 
-# Deploy
-vercel
+# Deploy client
+cd client
+vercel --prod
 
-# For production deployment
+# Deploy server
+cd ../server-app
 vercel --prod
 ```
 
@@ -104,7 +130,7 @@ vercel --prod
 After deployment, test the following:
 
 1. **Frontend loads**: Visit your Vercel URL
-2. **Public API works**: Try `/api/workshops` or `/api/events/current`
+2. **Public API works**: Call the server project directly (e.g. `https://your-api-project.vercel.app/api/events/current`)
 3. **Admin login**: Try logging in at `/admin-login`
 4. **Admin verification**: After login, verify you can access admin routes
 
@@ -161,10 +187,10 @@ The database connection might be failing. Check:
 
 ### Issue: API Requests Return 404
 
-1. Check `vercel.json` configuration
-2. Verify the `api/index.ts` file exists
-3. Check Vercel function logs for errors
-4. Ensure routes are properly configured
+1. Confirm the server project deployed (check Functions logs in the API project).
+2. Verify `server-app/vercel.json` is present and `npm run build` produces `dist/vercel-handler.cjs`.
+3. Make sure the frontend `VITE_API_URL` points to the live server URL and redeploy the client when you change it.
+4. Hit the API project directly (e.g. `https://your-api-project.vercel.app/api/events/current`) to ensure the route exists before testing from the frontend.
 
 ### Issue: Database Connection Errors
 
@@ -176,9 +202,9 @@ The database connection might be failing. Check:
 ### Issue: Build Fails
 
 1. Check build logs in Vercel dashboard
-2. Verify all dependencies are in `package.json`
-3. Check for TypeScript errors: `npm run check`
-4. Ensure build script works locally: `npm run build`
+2. Verify all dependencies are listed in the relevant workspace `package.json`
+3. Check for TypeScript errors: `npm run lint:client` and `npm run check:server`
+4. Ensure build scripts work locally: `npm run build:client` and `npm run build:server`
 
 ### Issue: Frontend Assets Not Loading
 
@@ -240,11 +266,15 @@ export NODE_ENV=production
 export SUPABASE_URL=...
 # ... set all other variables
 
-# Build
-npm run build
+# Build both workspaces
+npm run build:client
+npm run build:server
 
-# Test the build
-npm start
+# Test the API build
+npm run start:server
+
+# Serve the static client (optional)
+npx serve dist/public
 ```
 
 Then test admin login locally to ensure it works before deploying.

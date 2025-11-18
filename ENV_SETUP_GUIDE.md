@@ -51,6 +51,7 @@ DATABASE_URL=postgresql://postgres:YOUR_ACTUAL_PASSWORD@db.xxxxxxxxxxxxx.supabas
 # =================================
 VITE_SUPABASE_URL=https://xxxxxxxxxxxxx.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxx
+VITE_API_URL=https://your-api-project.vercel.app
 
 # =================================
 # KEEP YOUR EXISTING VARIABLES BELOW
@@ -79,6 +80,7 @@ NODE_ENV=development
 | `DATABASE_URL` | Server (Drizzle) | **YES!** Contains password | Supabase Dashboard → Settings → Database |
 | `VITE_SUPABASE_URL` | Client (Vite) | No (same as SUPABASE_URL) | Same as SUPABASE_URL |
 | `VITE_SUPABASE_ANON_KEY` | Client (Vite) | No (same as SUPABASE_ANON_KEY) | Same as SUPABASE_ANON_KEY |
+| `VITE_API_URL` | Client (Vite) | No (public API URL) | URL of the deployed server project |
 
 ## Step 4: What to Remove
 
@@ -103,9 +105,13 @@ After updating your `.env` file:
    ```
    If this succeeds, your database connection is working!
 
-4. **Test the app**:
+4. **Test the apps** (run in separate terminals):
    ```bash
-   npm run dev
+   # Start the API
+   npm run dev:server
+
+   # Start the client
+   npm run dev:client
    ```
 
 ## Example .env File (with fake values)
@@ -122,6 +128,7 @@ DATABASE_URL=postgresql://postgres:MyStr0ngP@ssw0rd@db.abcdefghijklmnop.supabase
 # Client (Vite)
 VITE_SUPABASE_URL=https://abcdefghijklmnop.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiY2RlZmdoaWprbG1ub3AiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTY0NTExMjEyMCwiZXhwIjoxOTYwNjg4MTIwfQ.fake_signature_here
+VITE_API_URL=https://your-api-project.vercel.app
 
 # Stripe (keep your existing values)
 STRIPE_SECRET_KEY=sk_test_51abc123...

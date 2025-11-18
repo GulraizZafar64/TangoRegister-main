@@ -9,29 +9,27 @@ export default defineConfig(async () => {
     runtimeErrorOverlay(),
   ];
 
-  // Conditionally add cartographer plugin
   if (process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined) {
     try {
       const cartographer = await import("@replit/vite-plugin-cartographer");
       plugins.push(cartographer.cartographer());
     } catch (error) {
-      // Plugin not available, continue without it
       console.warn("Cartographer plugin not available:", error);
     }
   }
 
   return {
     plugins,
+    root: import.meta.dirname,
     resolve: {
       alias: {
-        "@": path.resolve(import.meta.dirname, "client", "src"),
-        "@shared": path.resolve(import.meta.dirname, "shared"),
-        "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+        "@": path.resolve(import.meta.dirname, "src"),
+        "@shared": path.resolve(import.meta.dirname, "..", "shared"),
+        "@assets": path.resolve(import.meta.dirname, "..", "attached_assets"),
       },
     },
-    root: path.resolve(import.meta.dirname, "client"),
     build: {
-      outDir: path.resolve(import.meta.dirname, "dist/public"),
+      outDir: path.resolve(import.meta.dirname, "..", "dist/public"),
       emptyOutDir: true,
     },
     server: {

@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": ["vite/client", "node"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@shared/*": ["../shared/*"]
+    },
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "noEmit": true
+  },
+  "include": ["src", "../shared"],
+  "exclude": ["../server-app", "../dist"]
+}
+
