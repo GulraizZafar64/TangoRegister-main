@@ -2,12 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
+      "src": "src/vercel-handler.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/dist/vercel-handler.cjs" }
+    { "src": "/api/(.*)", "dest": "src/vercel-handler.ts" }
   ]
 }
-
