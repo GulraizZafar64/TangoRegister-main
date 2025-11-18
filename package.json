@@ -10,7 +10,7 @@
     "dev": "npm run dev:client",
     "dev:client": "npm run dev -w client",
     "dev:server": "npm run dev -w server-app",
-    "build": "npm run build:client --output dist/public",
+    "build": "npm run build:client --output dist",
     "build:client": "npm run build -w client",
     "build:server": "npm run build -w server-app",
     "build:all": "npm run build:client && npm run build:server",
