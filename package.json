@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "npm run dev:client",
-    "dev:client": "npm run dev -w client",
+    "dev:client": "npm run dev -w client --output public",
     "dev:server": "npm run dev -w server-app",
     "build": "npm run build:client",
     "build:client": "npm run build -w client",
