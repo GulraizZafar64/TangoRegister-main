@@ -1,9 +1,17 @@
 {
   "version": 2,
   "builds": [
-    { "src": "dist/vercel-handler.cjs", "use": "@vercel/node" }
+    {
+      "src": "server-app/dist/vercel-handler.cjs",
+      "use": "@vercel/node"
+    }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "dist/vercel-handler.cjs" }
-  ]
+    {
+      "src": "/(.*)",
+      "dest": "server-app/dist/vercel-handler.cjs"
+    }
+  ],
+  "installCommand": "npm install",
+  "buildCommand": "npm run build" 
 }
